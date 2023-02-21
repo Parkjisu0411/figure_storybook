@@ -1,25 +1,36 @@
 import React from 'react';
 import MuiButton from '@mui/material/Button';
 import MuiIconButton from '@mui/material/IconButton';
+import { createTheme, ThemeProvider, IconButtonProps, ButtonProps as MuiButtonProps } from '@mui/material';
 
-interface ButtonProps {
-    size?: 'small' | 'medium' | 'large';
-    label: string;
-    onClick?: () => void;
-}
+const { palette } = createTheme();
+const { augmentColor } = palette;
+const createColor = (mainColor: string) => augmentColor({ color: { main: mainColor } });
+const theme = createTheme({
+    palette: {
+        primary: createColor('#D96846')
+    },
+});
 
-export const Button = ({ size = 'medium', label, ...props }: ButtonProps) => {
+type ButtonProps = Omit<MuiButtonProps, 'label'> 
+    & {
+        label: string
+    };
+
+export const Button = ({ size = 'medium', color = 'primary', variant='contained', label, ...props }: ButtonProps) => {
     return (
-        <MuiButton variant='contained' {...props}>
-            {label}
-        </MuiButton>
+        <ThemeProvider theme={theme}>
+            <MuiButton size={size} color={color} variant={variant} {...props}>
+                {label}
+            </MuiButton>
+        </ThemeProvider>
     );
 };
 
-export const IconButton = ({ size = 'medium', label, ...props }: ButtonProps) => {
+export const IconButton = (props: IconButtonProps) => {
     return (
         <MuiIconButton>
-            {label}
+            {props.children}
         </MuiIconButton>
     );
 }
