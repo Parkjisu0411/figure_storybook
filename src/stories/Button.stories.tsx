@@ -8,14 +8,26 @@ export default {
     component: Button
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
-export const Text = Template.bind({});
-Text.args = {
+const ButtonTemplate: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+export const Contained = ButtonTemplate.bind({});
+Contained.args = {
     label: 'Button'
 };
 
-const IconTemplate: ComponentStory<typeof IconButton> = (args) => <IconButton {...args} ><HomeIcon></HomeIcon></IconButton>;
+export const Outlined = ButtonTemplate.bind({});
+Outlined.args = {
+    label: 'Button',
+    variant: 'outlined'
+};
+
+const IconTemplate: ComponentStory<typeof IconButton> = (args) => <IconButton {...args}></IconButton>;
 export const Icon = IconTemplate.bind({});
 Icon.args = {
-    
+    children: <HomeIcon />
+};
+
+export const OutlinedIcon = IconTemplate.bind({});
+OutlinedIcon.args = {
+    children: <HomeIcon />,
+    outlined: true
 };
